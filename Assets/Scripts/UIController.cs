@@ -15,14 +15,20 @@ public class UIController : MonoBehaviour
     [SerializeField]
     Text loseText;
 
-    void Start()
+    private void OnEnable()
     {
         GameController.lostGame += Lose;
     }
 
+    private void OnDisable()
+    {
+        GameController.lostGame -= Lose;
+    }
+
     void Lose()
     {
-        loseText.enabled = true;
+        if (!loseText.enabled)
+            loseText.enabled = true;
     }
 
     // Update is called once per frame

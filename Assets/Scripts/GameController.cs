@@ -19,9 +19,14 @@ public class GameController : MonoBehaviour
 
     public bool LevelWon { get => levelWon; }
 
-    private void Start()
+    private void OnEnable()
     {
         Cube.collidedWithObstacle += Lost;
+    }
+
+    private void OnDisable()
+    {
+        Cube.collidedWithObstacle -= Lost;
     }
 
     private void Lost()
@@ -43,7 +48,8 @@ public class GameController : MonoBehaviour
             Time.timeScale = 0;
             if (Input.GetKeyDown(KeyCode.R))
             {
-                SceneManager.LoadScene(0);
+                Time.timeScale = 1;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
 
