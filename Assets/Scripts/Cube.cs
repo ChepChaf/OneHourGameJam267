@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
+    public delegate void CollidedWithObstacle();
+    public static event CollidedWithObstacle collidedWithObstacle;
+
     [SerializeField]
     float c_speed = 200;
 
@@ -30,6 +33,12 @@ public class Cube : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
             return;
+
+        if (collision.gameObject.tag == "Obstacle")
+        {
+            if (collidedWithObstacle != null)
+                collidedWithObstacle();
+        }
 
         Debug.Log("Collided");
         if (m_isMoving)
